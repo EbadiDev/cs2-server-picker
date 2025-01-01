@@ -24,8 +24,6 @@ release/
 .DS_Store
 Thumbs.db
 
-# Electron specific
-resources/win32/psping.exe
 
 # Debug logs
 debug.log
