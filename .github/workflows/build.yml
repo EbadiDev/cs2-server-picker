@@ -37,13 +37,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Test Build (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-0 libnss3 libxss1 libasound2
+          xvfb-run --auto-servernum npm run test-build
+
+      - name: Test Build (Windows)
+        if: matrix.os == 'windows-latest'
+        run: npm run test-build
+
       - name: Upload Windows artifacts
         if: matrix.os == 'windows-latest'
         uses: actions/upload-artifact@v3
         with:
           name: windows-build
           path: |
-            dist/*.exe
+            dist/cs2-server-picker-Setup-*.exe
             !dist/win-unpacked
 
       - name: Upload Linux artifacts
@@ -52,8 +63,8 @@ jobs:
         with:
           name: linux-build
           path: |
-            dist/*.AppImage
-            dist/*.deb
+            dist/cs2-server-picker-*.AppImage
+            dist/cs2-server-picker_*.deb
             !dist/linux-unpacked
 
       - name: Release
@@ -63,9 +74,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            dist/*.exe
-            dist/*.AppImage
-            dist/*.deb
+            dist/cs2-server-picker-Setup-*.exe
+            dist/cs2-server-picker-*.AppImage
+            dist/cs2-server-picker_*.deb
           draft: false
           prerelease: false
           generate_release_notes: true 

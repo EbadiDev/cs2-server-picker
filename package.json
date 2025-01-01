@@ -5,7 +5,8 @@
   "scripts": {
     "start": "electron .",
     "build": "npm run prepare && node scripts/prepare-icons.js && electron-builder",
-    "prepare": "node scripts/prepare-tools.js"
+    "prepare": "node scripts/prepare-tools.js",
+    "test-build": "npm run build && electron dist/linux-unpacked/cs2-server-picker || electron dist/win-unpacked/cs2-server-picker.exe"
   },
   "keywords": [],
   "author": {
@@ -34,7 +35,8 @@
     "files": [
       "src/**/*",
       "public/**/*",
-      "resources/**/*"
+      "resources/**/*",
+      "scripts/**/*"
     ],
     "extraResources": [
       {
@@ -49,7 +51,8 @@
       "target": [
         "nsis"
       ],
-      "icon": "build/icons/icon.ico"
+      "icon": "build/icons/icon.ico",
+      "artifactName": "${productName}-Setup-${version}.${ext}"
     },
     "linux": {
       "target": [
@@ -59,7 +62,8 @@
       ],
       "icon": "build/icons/512x512.png",
       "category": "Utility",
-      "maintainer": "EbadiDev <ebadidev@gmail.com>"
+      "maintainer": "EbadiDev <ebadidev@gmail.com>",
+      "artifactName": "${productName}-${version}.${ext}"
     },
     "mac": {
       "target": [
