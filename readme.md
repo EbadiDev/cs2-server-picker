@@ -49,7 +49,7 @@ npm run build
 
 ## How It Works
 
-- Windows: Uses Windows Firewall rules
-- Linux: Uses iptables rules
-- Blocks UDP port 27015 for selected servers
+- Windows: Uses Windows Firewall rules to block outbound connections
+- Linux: Uses iptables rules to block outbound connections
+- Blocks all traffic to selected CS2 server IPs
 - Tests connection quality using ping/PSPing

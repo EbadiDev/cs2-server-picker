@@ -37,9 +37,9 @@ class ServerBlocker {
 
     static async blockLinuxServer(ips) {
         try {
-            // Add rules directly
+            // Block IPs entirely
             const commands = ips
-                .map(ip => `iptables -A OUTPUT -d ${ip} -p udp --dport 27015 -j DROP -m comment --comment "CS2_BLOCK"`)
+                .map(ip => `iptables -A OUTPUT -d ${ip} -j DROP -m comment --comment "CS2_BLOCK"`)
                 .join('; ');
 
             await execAsync(`pkexec sh -c '${commands}'`);
@@ -52,9 +52,9 @@ class ServerBlocker {
 
     static async unblockLinuxServer(ips) {
         try {
-            // Just try to remove the rules directly
+            // Remove IP blocks
             const commands = ips
-                .map(ip => `iptables -D OUTPUT -d ${ip} -p udp --dport 27015 -j DROP -m comment --comment "CS2_BLOCK"`)
+                .map(ip => `iptables -D OUTPUT -d ${ip} -j DROP -m comment --comment "CS2_BLOCK"`)
                 .join('; ');
 
             await execAsync(`pkexec sh -c '${commands}'`);
@@ -70,9 +70,9 @@ class ServerBlocker {
     }
 
     static async blockWindowsServer(ips) {
-        // For Windows, create a single batch command
+        // Block IPs entirely
         const rules = ips.map(ip => 
-            `netsh advfirewall firewall add rule name="CS2_BLOCK_${ip}" dir=out action=block protocol=UDP remoteip=${ip}`
+            `netsh advfirewall firewall add rule name="CS2_BLOCK_${ip}" dir=out action=block remoteip=${ip}`
         ).join(' && ');
         await execAsync(rules, { shell: 'cmd.exe' });
     }
