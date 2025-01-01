@@ -4,7 +4,7 @@ const fs = require('fs');
 const pngToIco = require('png-to-ico');
 
 async function convertIcons() {
-    const sourceImage = path.join(__dirname, '../resources/logo/logo.jpg');
+    const sourceImage = path.join(__dirname, '../resources/logo/icon.png');
     const sizes = [16, 32, 48, 64, 128, 256];
     
     // Create build/icons directory if it doesn't exist

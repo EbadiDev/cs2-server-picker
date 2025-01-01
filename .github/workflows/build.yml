@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: write
+  packages: write
+  issues: write
+
 jobs:
   build:
     name: Build (${{ matrix.os }})
