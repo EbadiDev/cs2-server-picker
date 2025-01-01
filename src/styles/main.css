@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap');
+
+html, body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent body scroll */
+    background: transparent;
+}
+
+body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    font-family: 'Rajdhani', sans-serif;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.server-card {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(74, 222, 128, 0.1);
+    animation: fadeIn 0.3s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+.server-card:hover {
+    border-color: rgba(74, 222, 128, 0.3);
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.1);
+    transform: translateY(-2px);
+}
+
+.server-card:hover ~ .titlebar,
+.server-card:hover ~ * .titlebar {
+    border-bottom-color: transparent;
+}
+
+.titlebar {
+    position: relative;
+    z-index: 2;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(74, 222, 128, 0.1);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    flex-shrink: 0;
+    transition: border-color 0.3s ease;
+}
+
+.window-controls button {
+    -webkit-app-region: no-drag;
+    padding: 8px 12px;
+    transition: all 0.2s ease;
+}
+
+.window-controls button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.close-btn:hover {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+.region-group {
+    border: 1px solid rgba(74, 222, 128, 0.1);
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(5px);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.region-group:hover {
+    border-color: rgba(74, 222, 128, 0.2);
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.05);
+}
+
+.region-group h2 {
+    color: #4ade80;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.servers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.grid-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.region-group.expanded .grid-content {
+    max-height: 500px; /* Initial height */
+    overflow-y: auto; /* Enable scrolling */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.region-group.expanded .grid-content::-webkit-scrollbar {
+    display: none;
+}
+
+/* Add some padding to the grid content */
+.servers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Add some hover effects to the group headers */
+.region-group h2:hover {
+    color: #6ee7b7;
+}
+
+/* Add some animation to the server cards */
+.server-card {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Add a subtle pulse animation to the latency indicator */
+.latency-indicator {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Add some padding to prevent content from touching the edges */
+.container {
+    flex: 1;
+    overflow-y: auto; /* Enable scrolling for content */
+    padding: 2rem;
+    margin-right: 6px; /* Add margin for scrollbar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Custom scrollbar styling */
+.container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.container::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.3);
+    border-radius: 3px;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background: rgba(74, 222, 128, 0.3);
+    border-radius: 3px;
+    transition: background 0.2s;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+    background: rgba(74, 222, 128, 0.5);
+}
+
+/* Make sure the last region group doesn't get cut off */
+.region-group:last-child {
+    margin-bottom: 1rem;
+}
+
+/* Add some padding at the bottom of scrollable content */
+#serverList {
+    padding-bottom: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Add hover state for server cards that affects titlebar */
+.server-card:hover ~ .titlebar,
+.server-card:hover ~ * .titlebar {
+    border-bottom-color: transparent;
+}
+
+/* Add a subtle transition when returning to normal state */
+.server-card:not(:hover) ~ .titlebar,
+.server-card:not(:hover) ~ * .titlebar {
+    transition: border-color 0.5s ease;
+}
+
+.server-result {
+    border: 1px solid transparent;
+}
+
+.server-result.best-server {
+    border-color: #34D399;
+    background: rgba(52, 211, 153, 0.1);
+}
+
+/* Make the refresh button container full width */
+.flex.justify-between.items-center.mb-6 {
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Add gap between region groups */
+.region-group + .region-group {
+    margin-top: 2rem;
+}
+
+/* Add hover effect to buttons */
+button:not(:disabled):active {
+    transform: scale(0.98);
+}
+
+/* Add transition for button states */
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Improve scrollbar visibility on hover */
+.container:hover::-webkit-scrollbar-thumb {
+    background: rgba(74, 222, 128, 0.5);
+}
+
+/* Add smooth transition for expanded groups */
+.region-group.expanded {
+    margin-bottom: 3rem;
+}
+
+/* Improve server result cards */
+.server-result {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+}
+
+.server-result:hover {
+    border-color: rgba(74, 222, 128, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Add transition for blocked badge */
+.blocked-badge {
+    animation: fadeIn 0.3s ease-out;
+} 

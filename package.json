@@ -1,0 +1,53 @@
+{
+  "name": "cs2-server-picker",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "npm run prepare && electron-builder",
+    "prepare": "node scripts/prepare-tools.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "dependencies": {
+    "@electron/remote": "^2.1.2",
+    "axios": "^1.6.0",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0",
+    "adm-zip": "^0.5.10"
+  },
+  "build": {
+    "appId": "com.cs2serverpicker.app",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "public/**/*",
+      "resources/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/${platform}",
+        "to": "resources/${platform}",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": ["nsis"],
+      "icon": "build/icon.ico"
+    },
+    "linux": {
+      "target": ["AppImage", "deb", "rpm"],
+      "icon": "build/icon.png",
+      "category": "Utility"
+    },
+    "publish": {
+      "provider": "github",
+      "releaseType": "release"
+    }
+  }
+}
