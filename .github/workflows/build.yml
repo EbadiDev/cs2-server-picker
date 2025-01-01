@@ -26,13 +26,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        
-      - name: Download PSPing (Windows)
-        if: matrix.os == 'windows-latest'
-        run: |
-          mkdir -p resources/win32
-          curl -L https://download.sysinternals.com/files/PSTools.zip -o PSTools.zip
-          7z e PSTools.zip psping.exe -oresources/win32/
 
       - name: Build app
         run: npm run build
