@@ -11,13 +11,15 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "description": "",
+  "description": "CS2 Server Picker - A tool to select and manage CS2 game servers",
   "dependencies": {
     "@electron/remote": "^2.1.2",
     "axios": "^1.6.0",
-    "electron": "^28.0.0",
-    "electron-builder": "^24.0.0",
     "adm-zip": "^0.5.10"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
   },
   "build": {
     "appId": "com.cs2serverpicker.app",
@@ -38,12 +40,16 @@
     ],
     "win": {
       "target": ["nsis"],
-      "icon": "build/icon.ico"
+      "icon": "resources/logo/logo.jpg"
     },
     "linux": {
       "target": ["AppImage", "deb", "rpm"],
-      "icon": "build/icon.png",
+      "icon": "resources/logo/logo.jpg",
       "category": "Utility"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "resources/logo/logo.jpg"
     },
     "publish": {
       "provider": "github",
