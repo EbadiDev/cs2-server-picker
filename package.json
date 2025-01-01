@@ -6,7 +6,7 @@
     "start": "electron .",
     "build": "npm run prepare && node scripts/prepare-icons.js && electron-builder",
     "prepare": "node scripts/prepare-tools.js",
-    "test-build": "npm run build && electron dist/linux-unpacked/cs2-server-picker || electron dist/win-unpacked/cs2-server-picker.exe"
+    "test-build": "npm run build && ([ \"$OSTYPE\" = \"linux-gnu\"* ] && electron dist/linux-unpacked/cs2-server-picker || electron dist/win-unpacked/cs2-server-picker.exe)"
   },
   "keywords": [],
   "author": {
@@ -57,8 +57,7 @@
     "linux": {
       "target": [
         "AppImage",
-        "deb",
-        "rpm"
+        "deb"
       ],
       "icon": "build/icons/512x512.png",
       "category": "Utility",

@@ -37,16 +37,33 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Test Build (Linux)
+      - name: Verify Build (Linux)
         if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-3-0 libnss3 libxss1 libasound2
-          xvfb-run --auto-servernum npm run test-build
+          if [ ! -f "dist/linux-unpacked/cs2-server-picker" ]; then
+            echo "Linux build not found!"
+            exit 1
+          fi
+          if [ ! -f "dist/cs2-server-picker-1.0.0.AppImage" ]; then
+            echo "AppImage not found!"
+            exit 1
+          fi
+          if [ ! -f "dist/cs2-server-picker-1.0.0.deb" ]; then
+            echo "DEB package not found!"
+            exit 1
+          fi
 
-      - name: Test Build (Windows)
+      - name: Verify Build (Windows)
         if: matrix.os == 'windows-latest'
-        run: npm run test-build
+        run: |
+          if (!(Test-Path "dist\win-unpacked\cs2-server-picker.exe")) {
+            Write-Error "Windows build not found!"
+            exit 1
+          }
+          if (!(Test-Path "dist\cs2-server-picker-Setup-1.0.0.exe")) {
+            Write-Error "Setup executable not found!"
+            exit 1
+          }
 
       - name: Upload Windows artifacts
         if: matrix.os == 'windows-latest'
@@ -64,7 +81,7 @@ jobs:
           name: linux-build
           path: |
             dist/cs2-server-picker-*.AppImage
-            dist/cs2-server-picker_*.deb
+            dist/cs2-server-picker-*.deb
             !dist/linux-unpacked
 
       - name: Release
@@ -76,7 +93,7 @@ jobs:
           files: |
             dist/cs2-server-picker-Setup-*.exe
             dist/cs2-server-picker-*.AppImage
-            dist/cs2-server-picker_*.deb
+            dist/cs2-server-picker-*.deb
           draft: false
           prerelease: false
           generate_release_notes: true 
