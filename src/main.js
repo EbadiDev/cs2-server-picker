@@ -30,7 +30,8 @@ function createWindow() {
     roundedCorners: true,
     titleBarStyle: 'hidden',
     vibrancy: 'dark',
-    hasShadow: true
+    hasShadow: true,
+    icon: path.join(__dirname, '../resources/logo/logo.jpg')
   });
 
   // Enable remote module for this window
@@ -47,7 +48,6 @@ function createWindow() {
   });
 
   win.loadFile(path.join(__dirname, '../public/index.html'));
-  win.webContents.openDevTools();
 }
 
 app.whenReady().then(async () => {
