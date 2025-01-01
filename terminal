@@ -1,5 +1,0 @@
-mkdir -p src/{components,utils,styles} public
-cd cs2-server-picker
-npm init -y
-npm install electron electron-builder axios @electron/remote 
-rm main.js index.html renderer.js server-blocker.js 
