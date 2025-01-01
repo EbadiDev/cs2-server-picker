@@ -13,7 +13,10 @@ A lightweight tool for managing Counter-Strike 2 server connections. Block or al
 
 ## Screenshots
 
-![App Screenshot](screenshots/app.png)
+![App Screenshot](screenshots/image_1.png) 
+![App Screenshot](screenshots/image_2.png) 
+![App Screenshot](screenshots/image_3.png) 
+![App Screenshot](screenshots/image_4.png) 
 
 ## Installation
 

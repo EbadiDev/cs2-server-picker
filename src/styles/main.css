@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap');
 
 html, body {
-    height: 100vh;
+    height: 100%;
     margin: 0;
     padding: 0;
     overflow: hidden; /* Prevent body scroll */
@@ -9,6 +9,7 @@ html, body {
 }
 
 body {
+    min-height: 100%;
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
     color: #ffffff;
     font-family: 'Rajdhani', sans-serif;
@@ -170,10 +171,10 @@ body {
     flex: 1;
     overflow-y: auto; /* Enable scrolling for content */
     padding: 2rem;
-    margin-right: 6px; /* Add margin for scrollbar */
+    margin-right: 0; /* Remove right margin */
     display: flex;
     flex-direction: column;
-    align-items: center;
+    min-height: 0; /* Fix flexbox scrolling */
 }
 
 /* Custom scrollbar styling */
@@ -276,4 +277,37 @@ button:disabled {
 /* Add transition for blocked badge */
 .blocked-badge {
     animation: fadeIn 0.3s ease-out;
+}
+
+/* GitHub link styles */
+a[href^="https://github.com"] {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+a[href^="https://github.com"]:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.2);
+}
+
+a[href^="https://github.com"]:active {
+    transform: translateY(0);
+}
+
+/* Draggable area styles */
+.draggable {
+    -webkit-app-region: drag;
+    app-region: drag;
+}
+
+.no-drag {
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
+}
+
+/* Make sure links and buttons are clickable in draggable areas */
+.draggable a,
+.draggable button {
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
 } 

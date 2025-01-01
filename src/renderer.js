@@ -597,6 +597,10 @@ async function checkSteamAPI() {
 document.addEventListener('DOMContentLoaded', () => {
     createRefreshButton();
     initializeApp();
+    document.querySelector('a[href^="https://github.com"]').addEventListener('click', (e) => {
+        e.preventDefault();
+        require('electron').shell.openExternal(e.currentTarget.href);
+    });
 });
 
 document.addEventListener('keydown', (e) => {
