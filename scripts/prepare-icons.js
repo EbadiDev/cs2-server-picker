@@ -6,6 +6,12 @@ async function convertIcons() {
     const sourceImage = path.join(__dirname, '../resources/logo/logo.jpg');
     const sizes = [16, 32, 48, 64, 128, 256, 512, 1024];
     
+    // Create build/icons directory if it doesn't exist
+    const iconDir = path.join(__dirname, '../build/icons');
+    if (!fs.existsSync(iconDir)) {
+        fs.mkdirSync(iconDir, { recursive: true });
+    }
+    
     // Create PNG icons for Linux
     await sharp(sourceImage)
         .resize(512, 512)

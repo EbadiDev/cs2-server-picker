@@ -8,7 +8,10 @@
     "prepare": "node scripts/prepare-tools.js"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "EbadiDev",
+    "email": "ebadidev@gmail.com"
+  },
   "license": "ISC",
   "type": "commonjs",
   "description": "CS2 Server Picker - A tool to select and manage CS2 game servers",
@@ -54,7 +57,8 @@
         "rpm"
       ],
       "icon": "build/icons/512x512.png",
-      "category": "Utility"
+      "category": "Utility",
+      "maintainer": "EbadiDev <ebadidev@gmail.com>"
     },
     "mac": {
       "target": [
