@@ -4,7 +4,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "npm run prepare && electron-builder",
+    "build": "npm run prepare && node scripts/prepare-icons.js && electron-builder",
     "prepare": "node scripts/prepare-tools.js"
   },
   "keywords": [],
@@ -14,12 +14,13 @@
   "description": "CS2 Server Picker - A tool to select and manage CS2 game servers",
   "dependencies": {
     "@electron/remote": "^2.1.2",
-    "axios": "^1.6.0",
-    "adm-zip": "^0.5.10"
+    "adm-zip": "^0.5.10",
+    "axios": "^1.6.0"
   },
   "devDependencies": {
     "electron": "^28.0.0",
-    "electron-builder": "^24.0.0"
+    "electron-builder": "^24.0.0",
+    "sharp": "^0.33.1"
   },
   "build": {
     "appId": "com.cs2serverpicker.app",
@@ -35,21 +36,31 @@
       {
         "from": "resources/${platform}",
         "to": "resources/${platform}",
-        "filter": ["**/*"]
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "win": {
-      "target": ["nsis"],
-      "icon": "resources/logo/logo.jpg"
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icons/icon.ico"
     },
     "linux": {
-      "target": ["AppImage", "deb", "rpm"],
-      "icon": "resources/logo/logo.jpg",
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
+      "icon": "build/icons/512x512.png",
       "category": "Utility"
     },
     "mac": {
-      "target": ["dmg"],
-      "icon": "resources/logo/logo.jpg"
+      "target": [
+        "dmg"
+      ],
+      "icon": "build/icons/icon.icns"
     },
     "publish": {
       "provider": "github",
