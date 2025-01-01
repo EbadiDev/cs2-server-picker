@@ -25,7 +25,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
         
       - name: Download PSPing (Windows)
         if: matrix.os == 'windows-latest'
@@ -58,9 +58,9 @@ jobs:
             dist/*.deb
             !dist/linux-unpacked
 
-      - name: Create Release
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/v')
         with:
           files: |
             dist/*.exe
@@ -68,5 +68,5 @@ jobs:
             dist/*.deb
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          generate_release_notes: true
+          token: ${{ secrets.GITHUB_TOKEN }} 
