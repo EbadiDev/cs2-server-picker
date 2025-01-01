@@ -37,10 +37,15 @@ class ServerBlocker {
 
     static async blockLinuxServer(ips) {
         try {
-            // Block IPs entirely
-            const commands = ips
-                .map(ip => `iptables -A OUTPUT -d ${ip} -j DROP -m comment --comment "CS2_BLOCK"`)
-                .join('; ');
+            // Block both inbound and outbound traffic for both UDP and TCP
+            const commands = ips.flatMap(ip => [
+                // Block outbound
+                `iptables -A OUTPUT -d ${ip} -p udp -j DROP -m comment --comment "CS2_BLOCK"`,
+                `iptables -A OUTPUT -d ${ip} -p tcp -j DROP -m comment --comment "CS2_BLOCK"`,
+                // Block inbound
+                `iptables -A INPUT -s ${ip} -p udp -j DROP -m comment --comment "CS2_BLOCK"`,
+                `iptables -A INPUT -s ${ip} -p tcp -j DROP -m comment --comment "CS2_BLOCK"`
+            ]).join('; ');
 
             await execAsync(`pkexec sh -c '${commands}'`);
             return true;
@@ -52,10 +57,15 @@ class ServerBlocker {
 
     static async unblockLinuxServer(ips) {
         try {
-            // Remove IP blocks
-            const commands = ips
-                .map(ip => `iptables -D OUTPUT -d ${ip} -j DROP -m comment --comment "CS2_BLOCK"`)
-                .join('; ');
+            // Remove both inbound and outbound blocks for both UDP and TCP
+            const commands = ips.flatMap(ip => [
+                // Remove outbound blocks
+                `iptables -D OUTPUT -d ${ip} -p udp -j DROP -m comment --comment "CS2_BLOCK"`,
+                `iptables -D OUTPUT -d ${ip} -p tcp -j DROP -m comment --comment "CS2_BLOCK"`,
+                // Remove inbound blocks
+                `iptables -D INPUT -s ${ip} -p udp -j DROP -m comment --comment "CS2_BLOCK"`,
+                `iptables -D INPUT -s ${ip} -p tcp -j DROP -m comment --comment "CS2_BLOCK"`
+            ]).join('; ');
 
             await execAsync(`pkexec sh -c '${commands}'`);
             return true;
@@ -70,18 +80,26 @@ class ServerBlocker {
     }
 
     static async blockWindowsServer(ips) {
-        // Block IPs entirely
-        const rules = ips.map(ip => 
-            `netsh advfirewall firewall add rule name="CS2_BLOCK_${ip}" dir=out action=block remoteip=${ip}`
-        ).join(' && ');
+        // Block both inbound and outbound for both UDP and TCP
+        const rules = ips.flatMap(ip => [
+            // Block outbound
+            `netsh advfirewall firewall add rule name="CS2_BLOCK_OUT_UDP_${ip}" dir=out action=block protocol=UDP remoteip=${ip}`,
+            `netsh advfirewall firewall add rule name="CS2_BLOCK_OUT_TCP_${ip}" dir=out action=block protocol=TCP remoteip=${ip}`,
+            // Block inbound
+            `netsh advfirewall firewall add rule name="CS2_BLOCK_IN_UDP_${ip}" dir=in action=block protocol=UDP remoteip=${ip}`,
+            `netsh advfirewall firewall add rule name="CS2_BLOCK_IN_TCP_${ip}" dir=in action=block protocol=TCP remoteip=${ip}`
+        ]).join(' && ');
         await execAsync(rules, { shell: 'cmd.exe' });
     }
 
     static async unblockWindowsServer(ips) {
-        // For Windows, create a single batch command
-        const rules = ips.map(ip => 
-            `netsh advfirewall firewall delete rule name="CS2_BLOCK_${ip}"`
-        ).join(' && ');
+        // Remove all blocking rules
+        const rules = ips.flatMap(ip => [
+            `netsh advfirewall firewall delete rule name="CS2_BLOCK_OUT_UDP_${ip}"`,
+            `netsh advfirewall firewall delete rule name="CS2_BLOCK_OUT_TCP_${ip}"`,
+            `netsh advfirewall firewall delete rule name="CS2_BLOCK_IN_UDP_${ip}"`,
+            `netsh advfirewall firewall delete rule name="CS2_BLOCK_IN_TCP_${ip}"`
+        ]).join(' && ');
         await execAsync(rules, { shell: 'cmd.exe' });
     }
 }
