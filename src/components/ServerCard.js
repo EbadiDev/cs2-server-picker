@@ -5,7 +5,7 @@ class ServerCard {
     static REGIONS = {
         'North America': ['atl', 'dfw', 'eat', 'iad', 'lax', 'ord', 'sea'],
         'South America': ['gru', 'scl', 'lim', 'eze'],
-        'Europe': ['ams', 'fra', 'hel', 'lhr', 'mad', 'par', 'sto', 'vie', 'waw'],
+        'Europe': ['ams', 'fra', 'hel', 'lhr', 'mad', 'par', 'sto', 'sto2', 'vie', 'waw'],
         'Asia': ['bom', 'dxb', 'hkg', 'sgp', 'tyo', 'seo'],
         'China': ['ctu', 'pek', 'pvg', 'sha', 'tsn'],
         'Australia': ['syd']
@@ -35,6 +35,7 @@ class ServerCard {
         'mad': '🇪🇸', // Madrid
         'par': '🇫🇷', // Paris
         'sto': '🇸🇪', // Stockholm
+        'sto2': '🇸🇪', // Stockholm - Bromma
         'vie': '🇦🇹', // Vienna
         'waw': '🇵🇱', // Warsaw
 
