@@ -23,6 +23,7 @@ release/
 *.swo
 .DS_Store
 Thumbs.db
+.history/
 
 
 # Debug logs
