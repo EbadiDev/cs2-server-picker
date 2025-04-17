@@ -35,14 +35,10 @@ jobs:
       - name: Extract version from package.json
         id: get_version
         run: |
-          if ($env:OS -eq "Windows_NT") {
-            $version = (Get-Content package.json | ConvertFrom-Json).version
-            echo "VERSION=$version" >> $env:GITHUB_ENV
-          } else {
-            VERSION=$(jq -r .version package.json)
-            echo "VERSION=$VERSION" >> $GITHUB_ENV
-          }
-
+          VERSION=$(jq -r .version package.json)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          $win_version = (Get-Content package.json | ConvertFrom-Json).version
+          echo "win_version=$win_version" >> $env:GITHUB_ENV
 
 
       - name: Build app
@@ -73,7 +69,7 @@ jobs:
             Write-Error "Windows build not found!"
             exit 1
           }
-          if (!(Test-Path "dist\cs2-server-picker-Setup-$env:VERSION.exe")) {
+          if (!(Test-Path "dist\cs2-server-picker-Setup-$env:win_version.exe")) {
             Write-Error "Setup executable not found!"
             exit 1
           }
