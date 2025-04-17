@@ -32,6 +32,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Extract version from package.json
+        id: get_version
+        run: |
+          VERSION=$(jq -r .version package.json)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+
       - name: Build app
         run: npm run build
         env:
@@ -44,11 +51,11 @@ jobs:
             echo "Linux build not found!"
             exit 1
           fi
-          if [ ! -f "dist/cs2-server-picker-1.0.1.AppImage" ]; then
+          if [ ! -f "dist/cs2-server-picker-$VERSION.AppImage" ]; then
             echo "AppImage not found!"
             exit 1
           fi
-          if [ ! -f "dist/cs2-server-picker-1.0.1.deb" ]; then
+          if [ ! -f "dist/cs2-server-picker-$VERSION.deb" ]; then
             echo "DEB package not found!"
             exit 1
           fi
@@ -60,7 +67,7 @@ jobs:
             Write-Error "Windows build not found!"
             exit 1
           }
-          if (!(Test-Path "dist\cs2-server-picker-Setup-1.0.1.exe")) {
+          if (!(Test-Path "dist\cs2-server-picker-Setup-$env:VERSION.exe")) {
             Write-Error "Setup executable not found!"
             exit 1
           }
