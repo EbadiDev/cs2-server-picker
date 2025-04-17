@@ -34,14 +34,10 @@ jobs:
 
       - name: Extract version from package.json
         id: get_version
+        shell: bash
         run: |
-          if [ "$OSTYPE" = "linux-gnu"* ]; then
-            VERSION=$(jq -r .version package.json)
-            echo "VERSION=$VERSION" >> $GITHUB_ENV
-          elif [ "$env:OS" = "Windows_NT" ]; then
-            $version = (Get-Content package.json | ConvertFrom-Json).version
-            echo "VERSION=$version" >> $env:GITHUB_ENV
-          fi
+          VERSION=$(jq -r .version package.json)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build app
         run: npm run build
