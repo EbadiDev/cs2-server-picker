@@ -35,8 +35,14 @@ jobs:
       - name: Extract version from package.json
         id: get_version
         run: |
-          VERSION=$(jq -r .version package.json)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          if ($env:OS -eq "Windows_NT") {
+            $version = (Get-Content package.json | ConvertFrom-Json).version
+            echo "VERSION=$version" >> $env:GITHUB_ENV
+          } else {
+            VERSION=$(jq -r .version package.json)
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
+          }
+
 
 
       - name: Build app
